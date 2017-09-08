@@ -48,13 +48,7 @@ Packer:
       http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/connecting_to_windows_instance.html
 
 
-
 ## Todo
-
-* Check "# exporting the debug info to try to get the password.", see if that worked
-
-* Add MSBuild, ensure it works with test project
-  https://github.com/jeff-zohrab/CSharpHelloWorld
 
 * Fix tags (ref template.json "tags") - should be more sensible
 
