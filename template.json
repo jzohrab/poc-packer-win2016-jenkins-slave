@@ -4,7 +4,9 @@
         "aws_secret_key": "",
         "region": "",
         "source_ami": "",
-        "instance_type": ""
+        "instance_type": "",
+        "repo": "{{env `REPO`}}",
+        "sha": "{{env `SHA`}}"
     },
     "builders": [{
         "type": "amazon-ebs",
@@ -13,7 +15,13 @@
         "region": "{{user `region`}}",
         "source_ami": "{{user `source_ami`}}",
         "instance_type": "{{user `instance_type`}}",
-        "ami_name": "windows-ami {{timestamp}}",
+        "ami_name": "windows-msbuild {{timestamp}}",
+        "tags": {
+          "cluster": "jenkins",
+          "software": "docker",
+          "vcs-repo": "{{user `repo`}}",
+          "vcs-sha": "{{user `sha`}}"
+        },
         "user_data_file": "./ec2-userdata.ps1",
         "communicator": "winrm",
         "winrm_username": "Administrator",

@@ -26,7 +26,12 @@ Ensure you have a security group set up with RDP ingress:
 
 Packer:
 
-    $ packer validate -var-file=./vars/aws_creds.json -var-file=./vars/win_ami_base.json template.json
+    $ REPO=`git remote get-url origin` \
+      SHA=`git log -n 1 --format=%h` \
+      packer validate \
+      -var-file=./vars/aws_creds.json \
+      -var-file=./vars/win_ami_base.json \
+      template.json
     # OK
 
     # exporting the debug info to try to get the password.
