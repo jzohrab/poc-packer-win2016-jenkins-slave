@@ -18,7 +18,6 @@
         "ami_name": "windows-msbuild {{timestamp}}",
         "tags": {
           "cluster": "jenkins",
-          "software": "docker",
           "vcs-repo": "{{user `repo`}}",
           "vcs-sha": "{{user `sha`}}"
         },
