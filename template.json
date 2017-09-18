@@ -31,10 +31,6 @@
 
     "provisioners": [
         {
-            "type": "file",
-            "source": "reset-execution-policy.ps1",
-            "destination": "C:\\reset-execution-policy.ps1"
-        },{
             "type": "powershell",
             "script": "provision.ps1"
         }
