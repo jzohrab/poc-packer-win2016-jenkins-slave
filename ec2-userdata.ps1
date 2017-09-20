@@ -1,4 +1,6 @@
 <powershell>
+# Ref http://blog.petegoo.com/2016/05/10/packer-aws-windows/
+# for WinRM notes.
 
 write-output "Running User Data Script"
 write-host "(host) Running User Data Script"

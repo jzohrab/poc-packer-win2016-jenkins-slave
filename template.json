@@ -3,7 +3,6 @@
         "aws_access_key": "",
         "aws_secret_key": "",
         "region": "",
-        "source_ami": "",
         "instance_type": "",
         "repo": "{{env `REPO`}}",
         "sha": "{{env `SHA`}}"
@@ -13,7 +12,15 @@
         "access_key": "{{user `aws_access_key`}}",
         "secret_key": "{{user `aws_secret_key`}}",
         "region": "{{user `region`}}",
-        "source_ami": "{{user `source_ami`}}",
+        "source_ami_filter": {
+            "filters": {
+                "virtualization-type": "hvm",
+                "name": "*Windows_Server-2016-English-Full-Base*",
+                "root-device-type": "ebs"
+            },
+            "owners": ["amazon"],
+            "most_recent": true
+        },
         "instance_type": "{{user `instance_type`}}",
         "ami_name": "windows-msbuild {{timestamp}}",
         "tags": {
