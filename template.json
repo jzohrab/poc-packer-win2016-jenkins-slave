@@ -40,6 +40,11 @@
         {
             "type": "powershell",
             "script": "provision.ps1"
+        },
+	{
+            "type": "powershell",
+            "script": "aws_ec2launch.ps1"
         }
+
     ]
 }
