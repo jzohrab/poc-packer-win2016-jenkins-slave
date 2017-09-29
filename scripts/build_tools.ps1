@@ -1,3 +1,5 @@
+# Install build tools.
+
 $ProgressPreference = 'SilentlyContinue'
 $ErrorActionPreference = 'Stop'
 
@@ -142,9 +144,5 @@ Add-EnvPath $msbuilddir "Machine"
 # Chocolatey.
 iex ((New-Object System.Net.WebClient).DownloadString("https://chocolatey.org/install.ps1"))
 choco install -y jre8 git
-
-# Jenkins swarm
-$swarm_url = "https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/3.4/swarm-client-3.4.jar"
-Invoke-WebRequest $swarm_url -OutFile "C:/swarm-client.jar" -UseBasicParsing
 
 Stop-Transcript

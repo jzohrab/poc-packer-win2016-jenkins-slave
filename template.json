@@ -39,7 +39,11 @@
     "provisioners": [
         {
             "type": "powershell",
-            "script": "scripts/provision.ps1"
+            "script": "scripts/build_tools.ps1"
+        },
+        {
+            "type": "powershell",
+            "script": "scripts/jenkins_swarm.ps1"
         },
 	{
             "type": "powershell",
