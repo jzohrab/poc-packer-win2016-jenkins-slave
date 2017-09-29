@@ -3,9 +3,6 @@ $ErrorActionPreference = 'Stop'
 
 Start-Transcript -path "C:\provision.ps1.log" -append
 
-iex ((New-Object System.Net.WebClient).DownloadString("https://chocolatey.org/install.ps1"))
-choco install -y jre8 git
-
 # Packages
 # Ref http://www.systemcentercentral.com/automating-application-installation-using-powershell-without-dsc-oneget-2/
 
@@ -145,6 +142,9 @@ Add-EnvPath $msbuilddir "Machine"
 # $newpath = "C:\Ruby23\bin;$msbuilddir;$oldpath"
 # Write-Output $newpath
 # Set-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH -Value $newpath
+
+iex ((New-Object System.Net.WebClient).DownloadString("https://chocolatey.org/install.ps1"))
+choco install -y jre8 git
 
 # Jenkins swarm
 $swarm_url = "https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/3.4/swarm-client-3.4.jar"
