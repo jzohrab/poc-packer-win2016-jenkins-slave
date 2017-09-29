@@ -47,7 +47,7 @@
         },
         {
             "type": "powershell",
-            "inline": ["tzutil /s 'Eastern Standard Time'"]
+            "script": "scripts/set_timezone.ps1"
         },
         {
             "type": "powershell",
