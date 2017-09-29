@@ -80,16 +80,24 @@ foreach ($package in $packages) {
     $args = $package.args
     $fullpath = "${downloadfolder}\${filename}"
 
-    $command = "$fullpath $args | Out-Null"  # Default
     # for notes on piping to Out-Null, see
     # https://stackoverflow.com/questions/1741490/ \
     #   how-to-tell-powershell-to-wait-for-each-command-to-end-before-starting-the-next
     if ($filename.ToLower().EndsWith('msi')) {
-        $command = "msiexec /i $fullpath $args /quiet"
+        # Need to -wait for msi to install completely.
+        # ref https://www.reddit.com/r/PowerShell/ \
+        #   comments/34xobk/installing_msi_quietly/
+        Write-Output "Installing $fullpath"
+        Start-Process `
+            -FilePath "$env:systemroot\system32\msiexec.exe" `
+            -ArgumentList "/i $fullpath /qn /norestart" -Wait `
+            -WorkingDirectory $downloadfolder
     }
-
-    Write-Output "Installing $filename with command ""$command"""
-    Invoke-Expression -Command $command
+    else {
+       $command = "$fullpath $args | Out-Null"  # Default
+       Write-Output "Installing $filename with command ""$command"""
+       Invoke-Expression -Command $command
+    }
 }
 
 
