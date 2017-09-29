@@ -43,6 +43,10 @@
         },
         {
             "type": "powershell",
+            "script": "scripts/enable_msdtc.ps1"
+        },
+        {
+            "type": "powershell",
             "script": "scripts/jenkins_swarm.ps1"
         },
 	{
