@@ -3,6 +3,44 @@ $ErrorActionPreference = 'Stop'
 
 Start-Transcript -path "C:\provision.ps1.log" -append
 
+###########################################
+# Helpers
+
+# Setting path
+# Ref https://stackoverflow.com/questions/714877/setting-windows-powershell-path-variable
+function Add-EnvPath {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string] $Path,
+
+        [ValidateSet('Machine', 'User', 'Session')]
+        [string] $Container = 'Session'
+    )
+
+    if ($Container -ne 'Session') {
+        $containerMapping = @{
+            Machine = [EnvironmentVariableTarget]::Machine
+            User = [EnvironmentVariableTarget]::User
+        }
+        $containerType = $containerMapping[$Container]
+
+        $persistedPaths = [Environment]::GetEnvironmentVariable('Path', $containerType) -split ';'
+        if ($persistedPaths -notcontains $Path) {
+            $persistedPaths = $persistedPaths + $Path | where { $_ }
+            [Environment]::SetEnvironmentVariable('Path', $persistedPaths -join ';', $containerType)
+        }
+    }
+
+    $envPaths = $env:Path -split ';'
+    if ($envPaths -notcontains $Path) {
+        $envPaths = $envPaths + $Path | where { $_ }
+        $env:Path = $envPaths -join ';'
+    }
+    Write-Output $env:Path
+}
+
+###########################################
+
 # Packages
 # Ref http://www.systemcentercentral.com/automating-application-installation-using-powershell-without-dsc-oneget-2/
 
@@ -92,39 +130,6 @@ foreach ($package in $packages) {
     }
 }
 
-
-# Setting path
-# Ref https://stackoverflow.com/questions/714877/setting-windows-powershell-path-variable
-function Add-EnvPath {
-    param(
-        [Parameter(Mandatory=$true)]
-        [string] $Path,
-
-        [ValidateSet('Machine', 'User', 'Session')]
-        [string] $Container = 'Session'
-    )
-
-    if ($Container -ne 'Session') {
-        $containerMapping = @{
-            Machine = [EnvironmentVariableTarget]::Machine
-            User = [EnvironmentVariableTarget]::User
-        }
-        $containerType = $containerMapping[$Container]
-
-        $persistedPaths = [Environment]::GetEnvironmentVariable('Path', $containerType) -split ';'
-        if ($persistedPaths -notcontains $Path) {
-            $persistedPaths = $persistedPaths + $Path | where { $_ }
-            [Environment]::SetEnvironmentVariable('Path', $persistedPaths -join ';', $containerType)
-        }
-    }
-
-    $envPaths = $env:Path -split ';'
-    if ($envPaths -notcontains $Path) {
-        $envPaths = $envPaths + $Path | where { $_ }
-        $env:Path = $envPaths -join ';'
-    }
-    Write-Output $env:Path
-}
 
 # Path updates
 # Ref https://blogs.technet.microsoft.com/heyscriptingguy/2011/07/23/use-powershell-to-modify-your-environmental-path/
