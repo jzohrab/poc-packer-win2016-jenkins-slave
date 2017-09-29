@@ -28,7 +28,7 @@
           "vcs-repo": "{{user `repo`}}",
           "vcs-sha": "{{user `sha`}}"
         },
-        "user_data_file": "./ec2-userdata.ps1",
+        "user_data_file": "./userdata.txt",
         "communicator": "winrm",
         "winrm_username": "Administrator",
         "winrm_use_ssl": true,
@@ -39,11 +39,11 @@
     "provisioners": [
         {
             "type": "powershell",
-            "script": "provision.ps1"
+            "script": "scripts/provision.ps1"
         },
 	{
             "type": "powershell",
-            "script": "aws_ec2launch.ps1"
+            "script": "scripts/aws_ec2launch.ps1"
         }
 
     ]
