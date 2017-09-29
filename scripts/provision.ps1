@@ -60,40 +60,35 @@ $packages = @(
     }
 ) 
 
-# Download.
-foreach ($package in $packages) {
-    $filename = $package.filename
-    $destinationPath = $downloadfolder + "\" + $filename
-    If (!(Test-Path -Path $destinationPath -PathType Leaf)) {
-        Write-Host "Downloading $filename"
-        $webClient = New-Object System.Net.WebClient
-        $webClient.DownloadFile($package.url,$destinationPath)
-    }
-}
-
-# Install
+# Download and install.
 foreach ($package in $packages) {
     $filename = $package.filename
     $args = $package.args
     $fullpath = "${downloadfolder}\${filename}"
 
-    # for notes on piping to Out-Null, see
-    # https://stackoverflow.com/questions/1741490/ \
-    #   how-to-tell-powershell-to-wait-for-each-command-to-end-before-starting-the-next
+    $fullpath = $downloadfolder + "\" + $filename
+    If (!(Test-Path -Path $fullpath -PathType Leaf)) {
+        Write-Host "Downloading $filename"
+        $webClient = New-Object System.Net.WebClient
+        $webClient.DownloadFile($package.url, $fullpath)
+    }
+
+    Write-Output "Installing $fullpath"
     if ($filename.ToLower().EndsWith('msi')) {
         # Need to -wait for msi to install completely.
         # ref https://www.reddit.com/r/PowerShell/ \
         #   comments/34xobk/installing_msi_quietly/
-        Write-Output "Installing $fullpath"
         Start-Process `
             -FilePath "$env:systemroot\system32\msiexec.exe" `
             -ArgumentList "/i $fullpath /qn /norestart" -Wait `
             -WorkingDirectory $downloadfolder
     }
     else {
-       $command = "$fullpath $args | Out-Null"  # Default
-       Write-Output "Installing $filename with command ""$command"""
-       Invoke-Expression -Command $command
+        # Piping to Out-Null to force Powershell to wait
+        # for completion of exe process.
+        # https://stackoverflow.com/questions/1741490/ \
+        #   how-to-tell-powershell-to-wait-...
+        Invoke-Expression -Command "$fullpath $args | Out-Null"
     }
 }
 
@@ -139,10 +134,7 @@ $msbuilddir = (Get-ItemProperty hklm:\software\Microsoft\MSBuild\ToolsVersions\4
 Add-EnvPath "C:\Ruby23\bin" "Machine"
 Add-EnvPath $msbuilddir "Machine"
 
-# $newpath = "C:\Ruby23\bin;$msbuilddir;$oldpath"
-# Write-Output $newpath
-# Set-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH -Value $newpath
-
+# Chocolatey.
 iex ((New-Object System.Net.WebClient).DownloadString("https://chocolatey.org/install.ps1"))
 choco install -y jre8 git
 
