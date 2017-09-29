@@ -54,6 +54,11 @@
             "script": "scripts/jenkins_swarm.ps1"
         },
 	{
+	    "type": "file",
+	    "source": "scripts/start_slave.ps1",
+	    "destination": "C:/start_slave.ps1"
+	},
+	{
             "type": "powershell",
             "script": "scripts/aws_ec2launch.ps1"
         }
