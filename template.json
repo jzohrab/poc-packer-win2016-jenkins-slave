@@ -47,6 +47,10 @@
         },
         {
             "type": "powershell",
+            "inline": ["Set-TimeZone 'Eastern Standard Time'"]
+        },
+        {
+            "type": "powershell",
             "script": "scripts/jenkins_swarm.ps1"
         },
 	{
