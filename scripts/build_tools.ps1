@@ -63,7 +63,13 @@ $packages = @(
        url = "http://dl.bintray.com/oneclick/rubyinstaller/rubyinstaller-2.3.1.exe"
        args = '/silent'
     },
-    
+
+    @{
+       filename = "chrome_installer.exe"
+       url = "http://dl.google.com/chrome/install/375.126/chrome_installer.exe"
+       args = '/silent /install'
+    },
+
     @{
        filename = "node-v6.10.2-x64.msi"
        url = "https://nodejs.org/dist/v6.10.2/node-v6.10.2-x64.msi"
