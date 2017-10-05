@@ -71,6 +71,11 @@ $packages = @(
     },
 
     @{
+       filename = "AWSCLI64.msi"
+       url = "https://s3.amazonaws.com/aws-cli/AWSCLI64.msi"
+     },
+
+    @{
        filename = "node-v6.10.2-x64.msi"
        url = "https://nodejs.org/dist/v6.10.2/node-v6.10.2-x64.msi"
     },
@@ -145,6 +150,7 @@ foreach ($package in $packages) {
 $msbuilddir = (Get-ItemProperty hklm:\software\Microsoft\MSBuild\ToolsVersions\4.0).MSBuildToolsPath
 
 Add-EnvPath "C:\Ruby23\bin" "Machine"
+Add-EnvPath "C:\Program Files\Amazon\AWSCLI" "Machine"
 Add-EnvPath $msbuilddir "Machine"
 
 # Chocolatey.
