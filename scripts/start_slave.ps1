@@ -18,6 +18,7 @@ $swarm_client_cmd = "java -jar C:/swarm-client.jar " `
   + "-executors 1 -fsroot 'C:\Jenkins' " `
   + "-name ${name} " `
   + "-labels $label " `
+  + "-mode exclusive " `
   + "-disableClientsUniqueId"
 
 echo $swarm_client_cmd
