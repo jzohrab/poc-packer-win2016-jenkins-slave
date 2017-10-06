@@ -20,7 +20,7 @@ param(
 # - API control
 $name = "swarmslave_${env:computername}"
 
-# anonymous access for swarmslave
+# Ref https://wiki.jenkins.io/display/JENKINS/Swarm+Plugin for options.
 $swarm_client_cmd = "java -jar C:/swarm-client.jar " `
   + "-disableSslVerification " `
   + "-master 'http://${master_private_ip}:8080' " `
