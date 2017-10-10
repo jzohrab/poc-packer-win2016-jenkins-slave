@@ -11,6 +11,8 @@ param(
   [Parameter(Mandatory=$true)][string]$password
 )
 
+$ErrorActionPreference = 'Stop'
+
 mkdir c:/reference_repo
 cd c:/reference_repo
 

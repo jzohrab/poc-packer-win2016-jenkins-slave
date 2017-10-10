@@ -50,7 +50,7 @@
         {
             "type": "powershell",
             "script": "scripts/clone_klick_genome_repo.ps1",
-            "execute_command": "& { {{.Vars}}{{.Path}} -username {{user `githubuser`}} -password {{user `githubpass`}}; exit $LastExitCode}"
+            "execute_command": "powershell \"& { {{.Vars}} {{.Path}} -username {{user `githubuser`}} -password {{user `githubpass`}}; exit $LastExitCode }\""
         },
         {
             "type": "powershell",
