@@ -16,8 +16,8 @@ $ErrorActionPreference = 'Stop'
 mkdir c:/reference_repo
 cd c:/reference_repo
 
-# Was getting "Win32Exception encountered ... Failed to write credentials" exception.
-# https://stackoverflow.com/questions/43577576/git-bash-win32exception-failed-to-write-credentials
-git config --global credential.helper manager
+# Don't worry about "Win32Exception encountered ... Failed to write
+# credentials" exception.  We're cloning this as a reference,
+# and don't need to update it or use these creds again.
 
 git clone --progress https://${username}:${password}@github.com/KlickInc/klick-genome.git
