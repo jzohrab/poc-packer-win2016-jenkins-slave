@@ -5,7 +5,9 @@
         "region": "",
         "instance_type": "",
         "repo": "{{env `REPO`}}",
-        "sha": "{{env `SHA`}}"
+        "sha": "{{env `SHA`}}",
+        "githubuser": "{{env `GITHUBUSER`}}",
+        "githubpass": "{{env `GITHUBPASS`}}"
     },
     "builders": [{
         "type": "amazon-ebs",
@@ -44,6 +46,11 @@
         {
             "type": "powershell",
             "script": "scripts/enable_msdtc.ps1"
+        },
+        {
+            "type": "powershell",
+            "script": "scripts/clone_klick_genome_repo.ps1",
+            "execute_command": "& { {{.Vars}}{{.Path}} -username {{user `githubuser`}} -password {{user `githubpass`}}; exit $LastExitCode}"
         },
         {
             "type": "powershell",

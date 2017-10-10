@@ -5,10 +5,22 @@ This project has two main features:
 * pre-provisioning of common build tools using Packer
 * the Jenkins swarm plugin and a launch script for slaves
   to auto-register with the Jenkins master.
+* a clone of the klick-genome repo to speed pipeline runs,
+  with a local reference clone.
 
 ## Usage
 
 ### Building AMIs
+
+* Set GITHUBUSER and GITHUBPASS environment variables:
+
+    export GITHUBUSER=uname
+    export GITHUBPASS=password
+
+Optionally, pass them in to the build command as environment variables
+(see passing of `REPO` variable in the sample run below).
+
+* Sample run:
 
     $ REPO=`git remote get-url origin` \
       SHA=`git log -n 1 --format=%h` \

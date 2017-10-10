@@ -33,6 +33,7 @@ function get_cmd() {
 SUBNET_ID=`eval $(get_cmd SubnetId)`
 KEYNAME=`eval $(get_cmd KeyName)`
 SECGROUPS=`eval $(get_cmd "SecurityGroups[*].GroupId")`
+KEYNAME=jenkins
 
 echo
 echo Creating $COUNT instances of $AMIID reporting to $MASTERIP :
