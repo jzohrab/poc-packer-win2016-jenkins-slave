@@ -33,6 +33,7 @@ function get_cmd() {
 SUBNET_ID=`eval $(get_cmd SubnetId)`
 KEYNAME=`eval $(get_cmd KeyName)`
 SECGROUPS=`eval $(get_cmd "SecurityGroups[*].GroupId")`
+KEYNAME=jenkins
 
 echo
 echo Creating $COUNT instances of $AMIID reporting to $MASTERIP :
@@ -50,6 +51,7 @@ aws ec2 run-instances \
     --iam-instance-profile Name=s3-readonly-access \
     --count $COUNT \
     --instance-type m4.large \
+    --block-device-mappings DeviceName=/dev/sda1,Ebs={Encrypted=false,DeleteOnTermination=true,VolumeSize=100} \
     --key-name $KEYNAME \
     --user-data "<powershell>& C:\start_slave.ps1 -master_private_ip $MASTERIP -label sensei_build</powershell><persist>true</persist>" \
     --query "Instances[*].InstanceId"
