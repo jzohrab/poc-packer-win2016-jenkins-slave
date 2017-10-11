@@ -51,7 +51,7 @@ aws ec2 run-instances \
     --iam-instance-profile Name=s3-readonly-access \
     --count $COUNT \
     --instance-type m4.large \
-    --block-device-mappings DeviceName=/dev/sda1,Ebs={Encrypted=false,DeleteOnTermination=true,VolumeSize=100} \
+    --block-device-mappings '[{"DeviceName": "/dev/sda1", "Ebs": { "DeleteOnTermination":true, "VolumeSize":100}}]' \
     --key-name $KEYNAME \
     --user-data "<powershell>& C:\start_slave.ps1 -master_private_ip $MASTERIP -label sensei_build</powershell><persist>true</persist>" \
     --query "Instances[*].InstanceId"
