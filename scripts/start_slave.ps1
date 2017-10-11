@@ -15,10 +15,11 @@ param(
   [Parameter(Mandatory=$true)][string]$label
 )
 
-# "swarmslave" text is important:
-# - role-based strategy in Jenkins master adds this item to the "slavenode" group
-# - API control
-$name = "swarmslave_${env:computername}"
+# Building slave name: prepend "slave_" to IP address
+# "slave_" prefix lets Jenkins master add this node to the
+# "slavenode" group automatically.
+$IP = curl http://169.254.169.254/latest/meta-data/public-ipv4 | select -expand Content
+$name = "slave_${IP}".replace('.','_')
 
 # Ref https://wiki.jenkins.io/display/JENKINS/Swarm+Plugin for options.
 $swarm_client_cmd = "java -jar C:/swarm-client.jar " `
