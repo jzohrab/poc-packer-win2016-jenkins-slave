@@ -22,7 +22,7 @@
             "most_recent": true
         },
         "instance_type": "{{user `instance_type`}}",
-        "ami_name": "windows-msbuild {{timestamp}}",
+        "ami_name": "jenkins-sensei-slave {{timestamp}}",
         "tags": {
           "cluster": "jenkins",
           "vcs-repo": "{{user `repo`}}",
